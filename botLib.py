@@ -9,7 +9,9 @@ def makeRequest(method, data = {}, headers = {}, files = [], token = "1664734318
 
     url = "https://api.telegram.org/bot" + token + "/" + method
 
+    #sending a request
     response = sendreq("POST", url, headers=headers, data=data, files=files)
+    #getting response
     resp_dict = loadjson(response.text.encode('utf8'))
 
     return resp_dict
