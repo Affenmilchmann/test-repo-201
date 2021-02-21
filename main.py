@@ -1,4 +1,4 @@
 from botLib import *
 
-#test example
+#test request, returns info about bot
 print(makeRequest("getMe"))

@@ -1,13 +1,17 @@
 from requests import request as sendreq
 from json import loads as loadjson
 
-def makeRequest(method, data = {}, headers = {}, files = [], token = "1664734318:AAH4E4V0uSm4PC1-kDFKtISbJtlLB4t71MM"):
+token = ""
+with open("token.txt", "r") as f:
+    token = f.read()
+
+def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
     '''
     Makes a POST request https://api.telegram.org/bot + \<token> + / + \<method> \n
     Returns a dict.\n
     '''
 
-    url = "https://api.telegram.org/bot" + token + "/" + method
+    url = "https://api.telegram.org/bot" + token_ + "/" + method
 
     #sending a request
     response = sendreq("POST", url, headers=headers, data=data, files=files)
