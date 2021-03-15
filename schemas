@@ -1,0 +1,35 @@
+###########################
+add
+
+Okey i can add please send me pill name:
+Fenibut
+
+How many times a day you need to take it?
+2
+
+Okay pls send me time for each priem (every 30 mins format hh.mm for an ex 10:30 14:00 17:30)
+11:30
+21:00
+
+###########################
+del
+
+Ok pls send me name of a medicine
+Fenibut
+
+Ok! Ive deleted it
+###########################
+edit 
+
+{ user_id: stage }
+
+STAGE
+0 stage do you want to edit name? Yes - 1 stage No - 2 stage
+1 Enter new name pls - END
+2 Do you want to change "How many times a day"? Yes - 3 stage No - 5
+3 Pls enter the amount
+4 Pls enter hh.mm
+            hh.mm       
+            ....
+5 Which time do you want to edit
+6 pls text me new time
