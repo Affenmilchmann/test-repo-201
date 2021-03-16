@@ -1,11 +1,11 @@
 ###########################
-add
+U:add
 
-Okey i can add please send me pill name:
-Fenibut
+B:Okey i can add please send me pill name:
+U:Fenibut
 
-How many times a day you need to take it?
-2
+B:How many times a day you need to take it?
+U:2
 
 Okay pls send me time for each priem (every 30 mins format hh.mm for an ex 10:30 14:00 17:30)
 11:30
