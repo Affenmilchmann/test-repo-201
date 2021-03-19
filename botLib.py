@@ -64,3 +64,21 @@ def getUpdates(relevant_ones = True):
                 out_dict[user_id] = [text]
 
     return out_dict
+
+def sendMessage(user_id, text):
+    '''
+    Sends message with 'text' to user with 'user_id'\n \n
+    -Returns True on success\n
+    -Returns dict with provided by telegram error code end description on fail
+    '''
+    data = {'chat_id' : user_id * 1000,
+            'text' : text }
+
+    result = makeRequest("sendMessage", data=data)
+
+    if 'ok' in result and result['ok']:
+        return True
+    else:
+        return result
+
+print(sendMessage(421823263, "Wasup"))
