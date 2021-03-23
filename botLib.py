@@ -180,9 +180,3 @@ def getAllUsersData():
 
     return user_data
             
-
-user_id = 12346
-dt = { 'fennibt' : ['10:30', '15:00', '21:30'], 'noshpa' : ['15:30'] }
-setUserData(user_id, dt)
-
-print(getAllUsersData())
