@@ -8,4 +8,6 @@ format_example = {
 } 
 
 def msgHandler():
-    pass
+    for i in format_example.keys():
+        if i = 'add':
+            sendMessage(i, 'Please send me the pill name')
