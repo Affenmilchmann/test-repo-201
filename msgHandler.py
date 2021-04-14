@@ -9,6 +9,7 @@ format_example = {
 
 def msgHandler():
     messages = getUpdates()
-    for i in messages.keys():
-        if message[i] = 'add':
-            sendMessage(i, 'Please send me the pill name')
+    for id in messages.keys():
+        for msg in messages[id]:
+            if msg == 'add':
+                sendMessage(id, 'Please send me the pill name')
