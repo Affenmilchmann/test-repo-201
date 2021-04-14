@@ -3,9 +3,13 @@ from msgHandler import *
 from scheduleHandler import *
 
 bot_active = True
-MESSAGE_CHECK = 2
-SCHEDULE_CHECK = 10
+MESSAGE_CHECK = 10
+SCHEDULE_CHECK = 20
 time_passed_since_schedule_check = 0
+
+print("[INFO] Bot is acive. Settings are:")
+print("         message check interval -", MESSAGE_CHECK, "sec")
+print("         shedule check interval -", SCHEDULE_CHECK, "sec\n")
 
 while bot_active:
     t = time()
@@ -14,12 +18,14 @@ while bot_active:
     if time_passed_since_schedule_check >= SCHEDULE_CHECK:
         scheduleHandler()
         time_passed_since_schedule_check = 0
-        print("Schedule")
+        print("Schedule check")
     #Message processing block
     msgHandler()
+    print("Message check")
     #####
+    time_passed_since_schedule_check += MESSAGE_CHECK
+
     t = time() - t
 
-    print("Msg")
-    time_passed_since_schedule_check += MESSAGE_CHECK
+    print("Tick took", round(t, 2), "sec")
     sleep(MESSAGE_CHECK - t)
