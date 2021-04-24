@@ -3,8 +3,8 @@ from msgHandler import *
 from scheduleHandler import *
 
 bot_active = True
-MESSAGE_CHECK = 10
-SCHEDULE_CHECK = 20
+MESSAGE_CHECK = 4
+SCHEDULE_CHECK = 8
 time_passed_since_schedule_check = 0
 
 print("[INFO] Bot is acive. Settings are:")
@@ -28,4 +28,4 @@ while bot_active:
     t = time() - t
 
     print("Tick took", round(t, 2), "sec")
-    sleep(MESSAGE_CHECK - t)
+    sleep(max(MESSAGE_CHECK - t, 0))
