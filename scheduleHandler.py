@@ -6,5 +6,5 @@ import time
 def scheduleHandler():
     result = getAllUsersData()
     local_time = time.localtime()
-    current_time = local_time.tm_hour, local_time.tm_min
-    print(result)
+    current_time = str(local_time.tm_hour) + ':' + str(local_time.tm_min)
+    
