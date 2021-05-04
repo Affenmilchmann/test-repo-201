@@ -33,3 +33,22 @@ STAGE
             ....
 5 Which time do you want to edit
 6 pls text me new time
+
+
+from datetime import time, timedelta
+from botLib import *
+
+#sendMessage(user_id, message)
+
+def scheduleHandler(ЫСР_СРУСЛ):
+    result = getAllUsersData()
+    local_time = time.localtime()
+    for user in result:
+        for drug in result[user].keys():
+            for timestamp in result[user][drug]:
+                if time.strptime(timestamp) < time.now() + timedelta(seconds=SCH_CHECK):
+                    sendMessage(user, 'Please take the pill ' + drug)
+if current time < akljldjlaks
+
+
+время_приёма <= сейчас <= время_приёма + интервал_проверки

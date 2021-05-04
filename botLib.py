@@ -122,7 +122,7 @@ def editDrug(user_id, drug_name, new_timetable):
     'new_timetable' is array. To see format check 'setUserData()' description
     '''
     user_data = getUserData(user_id)
-    if not user_data:
+    if user_data == False:
         return False
 
     user_data[drug_name] = new_timetable
