@@ -16,7 +16,7 @@ while bot_active:
     #####
     #Schedule processing block
     if time_passed_since_schedule_check >= SCHEDULE_CHECK:
-        scheduleHandler()
+        scheduleHandler(SCHEDULE_CHECK)
         time_passed_since_schedule_check = 0
         print("Schedule check")
     #Message processing block
