@@ -9,7 +9,7 @@ tm.tzset()
 
 bot_active = True
 MESSAGE_CHECK = 15
-SCHEDULE_CHECK = 40
+SCHEDULE_CHECK = 60
 time_passed_since_schedule_check = SCHEDULE_CHECK
 
 print("[INFO] Bot is acive. Settings are:")
