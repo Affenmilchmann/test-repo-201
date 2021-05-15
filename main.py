@@ -4,7 +4,7 @@ from scheduleHandler import *
 
 bot_active = True
 MESSAGE_CHECK = 15
-SCHEDULE_CHECK = 120
+SCHEDULE_CHECK = 40
 time_passed_since_schedule_check = 0
 
 print("[INFO] Bot is acive. Settings are:")
