@@ -84,11 +84,13 @@ def sendMessage(user_id, text):
     -Returns dict with provided by telegram error code end description on fail
     '''
     data = {'chat_id' : user_id,
-            'text' : text }
+            'text' : text,
+            'parse_mode': 'markdown' }
 
     result = makeRequest("sendMessage", data=data)
 
     if 'ok' in result and result['ok']:
+        print("[Bot message to " + str(user_id) + "]", text)
         return True
     else:
         return result
@@ -113,21 +115,36 @@ def getUserData(user_id):
             return load(f)
 
     except IOError:
+        setUserData(user_id, {})
         return False
         
-def editDrug(user_id, drug_name, new_timetable):
-    '''
-    Edits one drug's timetable.\n
-    If there is no drug with 'drug_name' then new drug will be added\n
-    'new_timetable' is array. To see format check 'setUserData()' description
-    '''
+def checkDrug(user_id, drug_name):
     user_data = getUserData(user_id)
     if user_data == False:
         return False
 
-    user_data[drug_name] = new_timetable
+    return drug_name in user_data
+
+def addDrug(user_id, drug_name, timetable):
+    user_data = getUserData(user_id)
+    if user_data == False:
+        return False
+
+    user_data[drug_name] = timetable
 
     setUserData(user_id, user_data)
+
+def editDrug(user_id, drug_name, new_timetable):
+    user_data = getUserData(user_id)
+    if user_data == False:
+        return False
+
+    if drug_name in user_data:
+        user_data[drug_name] = new_timetable
+        setUserData(user_id, user_data)
+        return True
+    else:
+        return False
 
 def delDrug(user_id, drug_name):
     '''
@@ -145,6 +162,7 @@ def delDrug(user_id, drug_name):
         return False
 
     setUserData(user_id, user_data)
+    return True
 
 def delUserFile(user_id):
     '''

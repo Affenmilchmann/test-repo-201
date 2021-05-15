@@ -18,14 +18,14 @@ while bot_active:
     if time_passed_since_schedule_check >= SCHEDULE_CHECK:
         scheduleHandler(SCHEDULE_CHECK)
         time_passed_since_schedule_check = 0
-        print("Schedule check")
+        #print("Schedule check")
     #Message processing block
     msgHandler()
-    print("Message check")
+    #print("Message check")
     #####
     time_passed_since_schedule_check += MESSAGE_CHECK
 
     t = tm.time() - t
 
-    print("Tick took", round(t, 2), "sec")
-    tm.sleep(max(MESSAGE_CHECK - t, 0))
+    #print("Tick took", round(t, 2), "sec")
+    tm.sleep(max(MESSAGE_CHECK - t, 0)) 
