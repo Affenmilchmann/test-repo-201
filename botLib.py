@@ -57,8 +57,9 @@ def getUpdates(relevant_ones = True):
         data= {}
     #####################
     
+    d_result = makeRequest("getUpdates", data=data)
     print(d_result)
-    d_result = makeRequest("getUpdates", data=data)["result"]
+    d_result = d_result["result"]
     if len(d_result) != 0:
         setLastID(d_result[-1]["update_id"])
 
