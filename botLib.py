@@ -25,7 +25,6 @@ def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
     response = sendreq("POST", url, headers=headers, data=data, files=files)
     #getting response
     resp_dict = loads(response.text.encode('utf8'))
-    print(resp_dict, "\n", url)
     return resp_dict
 
 def getLastID():
