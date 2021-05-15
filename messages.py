@@ -19,12 +19,12 @@ DRUG_NOT_FOUND = "It looks like you dont have *{}* in you schedule"
 
 HELP_MSG = '''
 Here are my commands:
- - *add* - to add new drug to your schedule
- - *del* - to delete drug from your schedule
- - *edit* - to edit drug's schedule
- - *stop/s/q* - to stop current operation
+ - *add* - to add a new drug to your schedule
+ - *del* - to delete a drug from your schedule
+ - *edit* - to edit the drug's schedule
+ - *stop or s* - to stop current operation
  - *show* - shows you schedule
  - *help* - shows this message)
 
-Pill a day keeps doctor away!
+Pill a day keeps a doctor away!
 '''
