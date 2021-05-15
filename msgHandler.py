@@ -12,7 +12,6 @@ def msgHandler():
               #greeting if its the first user's time
         if getUserData(uid) == False:
             setUserData(uid, {})
-            sendMessage(uid, GREETING_MSG)
         for msg in messages[uid]:
             msg_l = msg.lower()
       
@@ -37,6 +36,8 @@ def msgHandler():
                 delHandler(msg, uid)
             elif ((msg_l == 'edit' or msg_l == '/edit') and len(user_cache[uid]) == 0) or ("edit" in user_cache[uid]):
                 editHandler(msg, uid)
+            elif msg_l == '/start':
+                sendMessage(uid, GREETING_MSG)
             else:
                 sendMessage(uid, UNKNOWN_COMMAND)
 
