@@ -1,6 +1,11 @@
 import time as tm
+import os
 from msgHandler import *
 from scheduleHandler import *
+
+##Setting timezone
+os.environ['TZ'] = 'Europe/Moscow'
+time.tzset()
 
 bot_active = True
 MESSAGE_CHECK = 15
@@ -10,6 +15,7 @@ time_passed_since_schedule_check = SCHEDULE_CHECK
 print("[INFO] Bot is acive. Settings are:")
 print("         message check interval -", MESSAGE_CHECK, "sec")
 print("         shedule check interval -", SCHEDULE_CHECK, "sec\n")
+print("         local time             -", datetime.now())
 
 while bot_active:
     t = tm.time()
