@@ -25,7 +25,7 @@ def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
     response = sendreq("POST", url, headers=headers, data=data, files=files)
     #getting response
     resp_dict = loads(response.text.encode('utf8'))
-
+    print(resp_dict, "\n", url)
     return resp_dict
 
 def getLastID():
@@ -57,9 +57,7 @@ def getUpdates(relevant_ones = True):
         data= {}
     #####################
     
-    d_result = makeRequest("getUpdates", data=data)
-    print(d_result)
-    d_result = d_result["result"]
+    d_result = makeRequest("getUpdates", data=data)["result"]
     if len(d_result) != 0:
         setLastID(d_result[-1]["update_id"])
 
