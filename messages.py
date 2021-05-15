@@ -17,6 +17,8 @@ ARR_FORMAT_ERR = "Something went wrong. Check your message format.\n Format exam
 UNKNOWN_COMMAND = "Whoopsie... Looks like its unknown commant for me. Try 'help' command."
 DRUG_NOT_FOUND = "It looks like you dont have *{}* in you schedule"
 
+NOTIFICATION_MSG = "Please take *{}*"
+
 HELP_MSG = '''
 Here are my commands:
  - *add* - to add a new drug to your schedule
