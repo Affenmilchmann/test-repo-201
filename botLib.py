@@ -19,7 +19,7 @@ def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
     Returns a dict.\n
     '''
 
-    url = "https://api.telegram.org/bot" + token_ + "/" + method
+    url = "https://api.telegram.org/bot" + token_.strip("\n") + "/" + method
 
     #sending a request
     response = sendreq("POST", url, headers=headers, data=data, files=files)
