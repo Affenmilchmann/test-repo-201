@@ -8,7 +8,7 @@ os.environ['TZ'] = 'Europe/Moscow'
 tm.tzset()
 
 bot_active = True
-MESSAGE_CHECK = 15
+MESSAGE_CHECK = 5
 SCHEDULE_CHECK = 60
 time_passed_since_schedule_check = SCHEDULE_CHECK
 
