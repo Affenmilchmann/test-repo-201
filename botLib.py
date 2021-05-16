@@ -59,7 +59,7 @@ def logCheck():
 
 def writeLog(msg, file_name):
     try:
-        with open(file_name, "a") as f:
+        with open(LOGS_PATH + file_name, "a") as f:
             f.write(logTimeStamp() + str(msg) + "\n")
         return True
     except:
