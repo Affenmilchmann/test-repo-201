@@ -48,10 +48,10 @@ def logTimeStamp():
 def logCheck():
     def check(file_name):
         try:
-            with open(file_name, "r") as f:
+            with open(LOGS_PATH + file_name, "r") as f:
                 pass
         except:
-            with open(file_name, "w") as f:
+            with open(LOGS_PATH + file_name, "w") as f:
                 f.write(logTimeStamp() + "File created.\n")
 
     check(bot_msg_log)
