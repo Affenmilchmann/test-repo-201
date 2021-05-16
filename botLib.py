@@ -10,13 +10,12 @@ token = ""
 scr_path = sys.path[0]
 token_file_name = path.join(scr_path, "token.txt")
 lst_id_file_name = path.join(scr_path, "last_update_id.txt")
+msg_log = path.join(scr_path, "logs/bots_messages.txt")
+USER_DATA_PATH = path.join(scr_path, "user_data/")
+
 
 with open(token_file_name, "r") as f:
     token = f.read()
-
-USER_DATA_PATH = "user_data/"
-LOGS_PATH = "logs/"
-msg_log = "bots_messages.txt"
 
 ########################
 ##### ASSIST FUNCS #####
@@ -53,17 +52,17 @@ def logTimeStamp():
 def logCheck():
     def check(file_name):
         try:
-            with open(LOGS_PATH + file_name, "r") as f:
+            with open(file_name, "r") as f:
                 pass
         except:
-            with open(LOGS_PATH + file_name, "w") as f:
+            with open(file_name, "w") as f:
                 f.write(logTimeStamp() + "File created.\n")
 
     check(msg_log)
 
 def writeLog(msg, file_name):
     try:
-        with open(LOGS_PATH + file_name, "a") as f:
+        with open(file_name, "a") as f:
             f.write(logTimeStamp() + str(msg) + "\n")
         return True
     except:
