@@ -1,6 +1,7 @@
 from requests import request as sendreq
 from json import loads, load, dump
 from os import remove as removeFile, walk
+from datetime import date, datetime 
 
 ##init
 token = ""
@@ -8,6 +9,9 @@ with open("token.txt", "r") as f:
     token = f.read()
 
 USER_DATA_PATH = "user_data/"
+LOGS_PATH = "logs/"
+bot_msg_log = "bots_messages.txt"
+user_msg_log = "user_messages.txt"
 
 ########################
 ##### ASSIST FUNCS #####
@@ -37,6 +41,38 @@ def getLastID():
 def setLastID(id_):
     with open("last_update_id.txt", "w") as f:
         f.write(str(id_ + 1))
+
+def logTimeStamp():
+    return "[" + str(datetime.now().strftime('%Y/%m/%d %H:%M:%S')) + "]"
+
+def logCheck():
+    def check(file_name):
+        try:
+            with open(file_name, "r") as f:
+                pass
+        except:
+            with open(file_name, "w") as f:
+                f.write(logTimeStamp() + "File created.\n")
+
+    check(bot_msg_log)
+    check(user_msg_log)
+
+def writeLog(msg, file_name):
+    try:
+        with open(file_name, "a") as f:
+            f.write(logTimeStamp() + str(msg) + "\n")
+        return True
+    except:
+        return False
+
+def writeBotMsgLog(msg, to):
+    writeLog("Message to: " + str(to) + "\n" + msg, bot_msg_log)
+
+def writeUserMsgLog(msg, from):
+    writeLog("Message from: " + str(from) + "\n" + msg, user_msg_log)
+
+def consoleLog(msg):
+    print(logTimeStamp(), msg)
 
 ######################
 ##### MAIN FUNCS #####
@@ -69,6 +105,8 @@ def getUpdates(relevant_ones = True):
             user_id = message["from"]["id"]
             text = message["text"]
 
+            writeUserMsgLog(text, user_id)
+
             if user_id in out_dict:
                 out_dict[user_id].append(text)
             else:
@@ -89,7 +127,8 @@ def sendMessage(user_id, text):
     result = makeRequest("sendMessage", data=data)
 
     if 'ok' in result and result['ok']:
-        print("[Bot message to " + str(user_id) + "]", text)
+        consoleLog("Bot message to " + str(user_id))
+        writeBotMsgLog(text, user_id)
         return True
     else:
         return result
