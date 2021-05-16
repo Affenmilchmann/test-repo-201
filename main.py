@@ -5,7 +5,7 @@ from scheduleHandler import *
 
 ##Setting timezone
 os.environ['TZ'] = 'Europe/Moscow'
-#tm.tzset()
+tm.tzset()
 
 bot_active = True
 MESSAGE_CHECK = 15
