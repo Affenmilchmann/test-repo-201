@@ -68,8 +68,8 @@ def writeLog(msg, file_name):
 def writeBotMsgLog(msg, to):
     writeLog("Message to: " + str(to) + "\n" + msg, bot_msg_log)
 
-def writeUserMsgLog(msg, from):
-    writeLog("Message from: " + str(from) + "\n" + msg, user_msg_log)
+def writeUserMsgLog(msg, from_):
+    writeLog("Message from: " + str(from_) + "\n" + msg, user_msg_log)
 
 def consoleLog(msg):
     print(logTimeStamp(), msg)
