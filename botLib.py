@@ -10,8 +10,7 @@ with open("token.txt", "r") as f:
 
 USER_DATA_PATH = "user_data/"
 LOGS_PATH = "logs/"
-bot_msg_log = "bots_messages.txt"
-user_msg_log = "user_messages.txt"
+msg_log = "bots_messages.txt"
 
 ########################
 ##### ASSIST FUNCS #####
@@ -54,8 +53,7 @@ def logCheck():
             with open(LOGS_PATH + file_name, "w") as f:
                 f.write(logTimeStamp() + "File created.\n")
 
-    check(bot_msg_log)
-    check(user_msg_log)
+    check(msg_log)
 
 def writeLog(msg, file_name):
     try:
@@ -65,11 +63,8 @@ def writeLog(msg, file_name):
     except:
         return False
 
-def writeBotMsgLog(msg, to):
-    writeLog("Message to: " + str(to) + "\n" + msg, bot_msg_log)
-
-def writeUserMsgLog(msg, from_):
-    writeLog("Message from: " + str(from_) + "\n" + msg, user_msg_log)
+def writeMsgLog(msg, from_, to):
+    writeLog("Message from: " + str(from_) + " to: " + str(to) + "\n" + msg, msg_log)
 
 def consoleLog(msg):
     print(logTimeStamp(), msg)
@@ -105,7 +100,7 @@ def getUpdates(relevant_ones = True):
             user_id = message["from"]["id"]
             text = message["text"]
 
-            writeUserMsgLog(text, user_id)
+            writeMsgLog(text, user_id, "BOT")
 
             if user_id in out_dict:
                 out_dict[user_id].append(text)
@@ -128,7 +123,7 @@ def sendMessage(user_id, text):
 
     if 'ok' in result and result['ok']:
         consoleLog("Bot message to " + str(user_id))
-        writeBotMsgLog(text, user_id)
+        writeMsgLog(text, "BOT", user_id)
         return True
     else:
         return result
