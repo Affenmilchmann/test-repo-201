@@ -2,10 +2,16 @@ from requests import request as sendreq
 from json import loads, load, dump
 from os import remove as removeFile, walk
 from datetime import date, datetime 
+from os import path
+import sys
 
 ##init
 token = ""
-with open("token.txt", "r") as f:
+scr_path = sys.path[0]
+token_file_name = path.join(scr_path, "token.txt")
+lst_id_file_name = path.join(scr_path, "last_update_id.txt")
+
+with open(token_file_name, "r") as f:
     token = f.read()
 
 USER_DATA_PATH = "user_data/"
@@ -31,14 +37,14 @@ def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
     return resp_dict
 
 def getLastID():
-    with open("last_update_id.txt", "r") as f:
+    with open(lst_id_file_name, "r") as f:
         id_ = f.readline()
         if id_ == "":
             id_ = 0
         return id_
 
 def setLastID(id_):
-    with open("last_update_id.txt", "w") as f:
+    with open(lst_id_file_name, "w") as f:
         f.write(str(id_ + 1))
 
 def logTimeStamp():
