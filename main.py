@@ -1,11 +1,13 @@
 import time as tm
 import os
+from sys import platform
 from msgHandler import *
 from scheduleHandler import *
 
 ##Setting timezone
-os.environ['TZ'] = 'Europe/Moscow'
-tm.tzset()
+if platform == "linux" or platform == "linux2":
+    os.environ['TZ'] = 'Europe/Moscow'
+    tm.tzset()
 
 bot_active = True
 MESSAGE_CHECK = 5

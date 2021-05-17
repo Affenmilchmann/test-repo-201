@@ -8,6 +8,8 @@ user_cache = {}
 
 def msgHandler():
     messages = getUpdates()
+    if messages == False:
+        return
     for uid in messages.keys():
               #greeting if its the first user's time
         if getUserData(uid) == False:

@@ -8,32 +8,18 @@ import sys
 ##init
 token = ""
 scr_path = sys.path[0]
+
 token_file_name = path.join(scr_path, "token.txt")
 lst_id_file_name = path.join(scr_path, "last_update_id.txt")
 msg_log = path.join(scr_path, "logs/bots_messages.txt")
+err_log = path.join(scr_path, "logs/error_log.txt")
+
+
 USER_DATA_PATH = path.join(scr_path, "user_data/")
-
-
-with open(token_file_name, "r") as f:
-    token = f.read()
 
 ########################
 ##### ASSIST FUNCS #####
 ########################
-
-def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
-    '''
-    Makes a POST request https://api.telegram.org/bot + \<token> + / + \<method> \n
-    Returns a dict.\n
-    '''
-
-    url = "https://api.telegram.org/bot" + token_.strip("\n") + "/" + method
-
-    #sending a request
-    response = sendreq("POST", url, headers=headers, data=data, files=files)
-    #getting response
-    resp_dict = loads(response.text.encode('utf8'))
-    return resp_dict
 
 def getLastID():
     with open(lst_id_file_name, "r") as f:
@@ -49,16 +35,25 @@ def setLastID(id_):
 def logTimeStamp():
     return "[" + str(datetime.now().strftime('%Y/%m/%d %H:%M:%S')) + "]"
 
+def consoleLog(msg):
+    print(logTimeStamp(), msg)
+
 def logCheck():
-    def check(file_name):
+    def check(file_name, creation_stamp = True):
         try:
             with open(file_name, "r") as f:
                 pass
         except:
             with open(file_name, "w") as f:
-                f.write(logTimeStamp() + "File created.\n")
+                if creation_stamp:
+                    f.write(logTimeStamp() + "File created.\n")
+                else:
+                    pass
+                consoleLog(file_name + " was missing so it has been created.")
 
     check(msg_log)
+    check(err_log)
+    check(lst_id_file_name, False)
 
 def writeLog(msg, file_name):
     try:
@@ -71,12 +66,51 @@ def writeLog(msg, file_name):
 def writeMsgLog(msg, from_, to):
     writeLog("Message from: " + str(from_) + " to: " + str(to) + "\n" + msg, msg_log)
 
-def consoleLog(msg):
-    print(logTimeStamp(), msg)
+def writeErrLog(msg):
+    writeLog(msg, err_log)
+
+######################
+##### TOKEN INIT #####
+######################
+
+try:
+    with open(token_file_name, "r") as f:
+        token = f.read()
+except:
+    consoleLog("token.txt is missing")
 
 ######################
 ##### MAIN FUNCS #####
 ######################
+
+def makeRequest(method, data = {}, headers = {}, files = [], token_ = token):
+    '''
+    Makes a POST request https://api.telegram.org/bot + \<token> + / + \<method> \n
+    Returns a dict.\n
+    '''
+
+    url = "https://api.telegram.org/bot" + token_.strip("\n") + "/" + method
+
+    #sending a request
+    response = sendreq("POST", url, headers=headers, data=data, files=files)
+    #getting response
+    resp_dict = loads(response.text.encode('utf8'))
+
+    if 'ok' in resp_dict:
+        if resp_dict['ok']:
+            return resp_dict
+        else:
+            ret = {
+                "request": url,
+                "data": data,
+                "headers": headers,
+                "files": files,
+                "response": resp_dict
+            }
+            writeErrLog(ret)
+            return ret
+
+    return resp_dict
 
 def getUpdates(relevant_ones = True):
     '''
@@ -91,8 +125,15 @@ def getUpdates(relevant_ones = True):
     else:
         data= {}
     #####################
-    
-    d_result = makeRequest("getUpdates", data=data)["result"]
+
+    d_result = makeRequest("getUpdates", data=data)
+
+    if not "result" in d_result:
+        consoleLog("getUpdates() failed.\n" + str(d_result))
+        return False
+
+    d_result = d_result["result"]
+
     if len(d_result) != 0:
         setLastID(d_result[-1]["update_id"])
 

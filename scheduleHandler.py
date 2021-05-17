@@ -13,5 +13,3 @@ def scheduleHandler(SCHEDULE_CHECK):
                 localtime = datetime.now().time()
                 if (pilltime.time() <= localtime and localtime <= (pilltime + timedelta(seconds=SCHEDULE_CHECK)).time()):
                     sendMessage(user, NOTIFICATION_MSG.format(drug))
-
-result = getUpdates()
