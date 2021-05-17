@@ -1,3 +1,7 @@
+VER_N = "1.0"
+VER_T = "stable"
+VER_STAMP = VER_N + " [" + VER_T + "]"
+
 import time as tm
 import os
 from sys import platform
@@ -15,6 +19,7 @@ SCHEDULE_CHECK = 60
 time_passed_since_schedule_check = SCHEDULE_CHECK
 
 print("[INFO] Bot is acive. Settings are:")
+print("         version -", VER_STAMP)
 print("         message check interval -", MESSAGE_CHECK, "sec")
 print("         shedule check interval -", SCHEDULE_CHECK, "sec\n")
 print("         local time             -", logTimeStamp())
