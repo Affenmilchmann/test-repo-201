@@ -1,6 +1,6 @@
 from requests import request as sendreq
 from json import loads, load, dump
-from os import remove as removeFile, walk
+from os import remove as removeFile, walk, mkdir
 from datetime import date, datetime 
 from os import path
 import sys
@@ -9,13 +9,14 @@ import sys
 token = ""
 scr_path = sys.path[0]
 
+USER_DATA_PATH = path.join(scr_path, "user_data/")
+LOGS_PATH = path.join(scr_path, "logs/")
+
 token_file_name = path.join(scr_path, "token.txt")
 lst_id_file_name = path.join(scr_path, "last_update_id.txt")
-msg_log = path.join(scr_path, "logs/bots_messages.txt")
-err_log = path.join(scr_path, "logs/error_log.txt")
+msg_log = path.join(scr_path, LOGS_PATH, "bots_messages.txt")
+err_log = path.join(scr_path, LOGS_PATH, "error_log.txt")
 
-
-USER_DATA_PATH = path.join(scr_path, "user_data/")
 
 ########################
 ##### ASSIST FUNCS #####
@@ -41,7 +42,13 @@ def consoleLog(msg, critical = False):
     print(logTimeStamp(), msg)
 
 def logCheck():
-    def check(file_name, creation_stamp = True):
+    def dirCheck(dir_name):
+        if path.exists(dir_name):
+            consoleLog(dir_name + " is present.")
+        else:
+            mkdir(dir_name)
+            consoleLog(dir_name + " was missing so it was created")
+    def fileCheck(file_name, creation_stamp = True):
         try:
             with open(file_name, "r") as f:
                 pass
@@ -51,11 +58,14 @@ def logCheck():
                     f.write(logTimeStamp() + "File created.\n")
                 else:
                     pass
-                consoleLog(file_name + " was missing so it has been created.")
+                consoleLog(file_name + " was missing so it was created.")
 
-    check(msg_log)
-    check(err_log)
-    check(lst_id_file_name, False)
+    dirCheck(LOGS_PATH)
+    dirCheck(USER_DATA_PATH)
+    fileCheck(msg_log)
+    fileCheck(err_log)
+    fileCheck(lst_id_file_name, False)
+
 
 def writeLog(msg, file_name):
     try:
