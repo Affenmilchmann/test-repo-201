@@ -35,7 +35,9 @@ def setLastID(id_):
 def logTimeStamp():
     return "[" + str(datetime.now().strftime('%Y/%m/%d %H:%M:%S')) + "]"
 
-def consoleLog(msg):
+def consoleLog(msg, critical = False):
+    if critical:
+        msg = "ERROR " + str(msg).upper()
     print(logTimeStamp(), msg)
 
 def logCheck():
@@ -76,8 +78,11 @@ def writeErrLog(msg):
 try:
     with open(token_file_name, "r") as f:
         token = f.read()
+    consoleLog("Token is present.")
 except:
-    consoleLog("token.txt is missing")
+    consoleLog("token.txt is missing.", critical=True)
+    consoleLog("Please create token.txt file in project's root and paste there you bot's token!")
+    quit()
 
 ######################
 ##### MAIN FUNCS #####
