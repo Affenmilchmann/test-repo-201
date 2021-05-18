@@ -18,11 +18,11 @@ MESSAGE_CHECK = 5
 SCHEDULE_CHECK = 60
 time_passed_since_schedule_check = SCHEDULE_CHECK
 
-print("[INFO] Bot is acive. Settings are:")
-print("         version -", VER_STAMP)
-print("         message check interval -", MESSAGE_CHECK, "sec")
-print("         shedule check interval -", SCHEDULE_CHECK, "sec\n")
-print("         local time             -", logTimeStamp())
+print("[INFO] Bot is acive. Settings are:", flush=True)
+print("         version -", VER_STAMP, flush=True)
+print("         message check interval -", MESSAGE_CHECK, "sec", flush=True)
+print("         shedule check interval -", SCHEDULE_CHECK, "sec\n", flush=True)
+print("         local time             -", logTimeStamp(), flush=True)
 
 logCheck()
 consoleLog("Logs checked.")

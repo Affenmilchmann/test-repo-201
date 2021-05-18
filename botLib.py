@@ -41,7 +41,7 @@ def logTimeStamp():
 def consoleLog(msg, critical = False):
     if critical:
         msg = "ERROR " + str(msg).upper()
-    print(logTimeStamp(), msg)
+    print(logTimeStamp(), msg, flush=True)
 
 def logCheck():
     def dirCheck(dir_name):
