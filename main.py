@@ -1,5 +1,5 @@
-VER_N = "1.0"
-VER_T = "stable"
+VER_N = "1.1"
+VER_T = "unstable"
 VER_STAMP = VER_N + " [" + VER_T + "]"
 
 import time as tm
