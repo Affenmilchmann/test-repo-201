@@ -14,8 +14,10 @@ LOGS_PATH = path.join(scr_path, "logs/")
 
 token_file_name = path.join(scr_path, "token.txt")
 lst_id_file_name = path.join(scr_path, "last_update_id.txt")
+
 msg_log = path.join(scr_path, LOGS_PATH, "bots_messages.txt")
 err_log = path.join(scr_path, LOGS_PATH, "error_log.txt")
+stats_log = path.join(scr_path, LOGS_PATH, "stats_log.txt")
 
 
 ########################
@@ -48,7 +50,7 @@ def logCheck():
         else:
             mkdir(dir_name)
             consoleLog(dir_name + " was missing so it was created")
-    def fileCheck(file_name, creation_stamp = True):
+    def fileCheck(file_name, creation_stamp = True, default = False):
         try:
             with open(file_name, "r") as f:
                 pass
@@ -56,15 +58,37 @@ def logCheck():
             with open(file_name, "w") as f:
                 if creation_stamp:
                     f.write(logTimeStamp() + "File created.\n")
-                else:
-                    pass
+                if default != False:
+                    f.write(str(default))
                 consoleLog(file_name + " was missing so it was created.")
 
     dirCheck(LOGS_PATH)
     dirCheck(USER_DATA_PATH)
     fileCheck(msg_log)
     fileCheck(err_log)
+    fileCheck(stats_log, creation_stamp=False, default={})
     fileCheck(lst_id_file_name, False)
+
+    ########################
+    #stats file format check
+    stats_file_data = {}
+    with open(stats_log, 'r') as f:
+        stats_file_data = load(f)
+    
+    def checkKey(key, default):
+        if not key in stats_file_data:
+            stats_file_data[key] = default
+            consoleLog(str(key) + " stats key was missing so it was added with default " + str(default))
+    
+    checkKey('uniq_users_amount', 0)
+    checkKey('active_users_amount', 0)
+    checkKey('max_active_users_amount', 0)
+    checkKey('uniq_users_id', [])
+    with open(stats_log, 'w') as f:
+        dump(stats_file_data, f)
+        consoleLog("Stats file was updated.")
+
+
 
 
 def writeLog(msg, file_name):
@@ -77,6 +101,25 @@ def writeLog(msg, file_name):
 
 def writeMsgLog(msg, from_, to):
     writeLog("Message from: " + str(from_) + " to: " + str(to) + "\n" + msg, msg_log)
+
+def writeStatsLog(current_ids_list):
+    stats_file_data = {}
+    with open(stats_log, 'r') as f:
+        stats_file_data = load(f)
+    
+    active_users_amount = len(current_ids_list)
+    uniq_users_id = set(stats_file_data['uniq_users_id']).union(set(current_ids_list))    
+    uniq_users_id = list(uniq_users_id)
+    uniq_users_amount = len(uniq_users_id)
+
+    if stats_file_data['max_active_users_amount'] < active_users_amount:
+        stats_file_data['max_active_users_amount'] = active_users_amount
+    stats_file_data['active_users_amount'] = active_users_amount
+    stats_file_data['uniq_users_id'] = uniq_users_id
+    stats_file_data['uniq_users_amount'] = uniq_users_amount
+
+    with open(stats_log, 'w') as f:
+        dump(stats_file_data, f)
 
 def writeErrLog(msg):
     writeLog(msg, err_log)
@@ -266,6 +309,7 @@ def delUserFile(user_id):
     '''
     try:
         removeFile(USER_DATA_PATH + str(user_id) + ".json")
+        consoleLog(str(user_id) + "'s file was deleted.")
     except IOError:
         return False
 
@@ -288,7 +332,13 @@ def getAllUsersData():
                 user_id = user_id[:-5]
 
         with open(USER_DATA_PATH + file_name, 'r') as f:
-            user_data[user_id] = load(f)
+            u_data = load(f)
+            if len(u_data) == 0:
+                consoleLog(str(user_id) + "'s file is empty")
+                delUserFile(user_id)
+            else:
+                user_data[user_id] = u_data
 
+    writeStatsLog(user_data.keys())
     return user_data
             
